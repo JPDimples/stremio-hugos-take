@@ -1,0 +1,1 @@
+{"name":"hugos-take","private":true,"scripts":{"deploy":"wrangler deploy","dev":"wrangler dev","test":"node tests/verdict.test.mjs && node tests/handler.test.mjs"},"type":"module"}
