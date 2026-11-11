@@ -26,7 +26,7 @@ const YOUTUBE = "https://www.youtube.com/@MrJparnham";
 
 const MANIFEST = {
   id: "community.hugos-take",
-  version: "1.1.0",
+  version: "1.1.1",
   name: "Hugo's Take",
   description:
     "Hugo the yeti gives his deadpan verdict on every movie and show, right on the detail page. Plus a link to more Hugo on YouTube.",

@@ -26,11 +26,14 @@ Plus one link in the detail page's Links section: "More Hugo on YouTube".
   verdict prepended to the description, and a "More Hugo on YouTube"
   link. **After installing, drag Hugo's Take to the top of your addon
   list in Stremio** (Addons page) so its meta is the one Stremio shows.
-- The verdict comes from a rule bank (`src/verdict.js`): horror,
-  rom-com, romance, high/low ratings, action, comedy, drama,
-  documentary, crime, thriller, sci-fi, family, animation, fantasy,
-  mystery — first match wins. The paw rating (1–5) comes from the
-  IMDb rating. If Cinemeta has no match, the Worker falls back to TMDB
+- The verdict comes from a rule bank (`src/verdict.js`): rom-com,
+  romance, high/low ratings, action, comedy, drama, documentary,
+  crime, thriller, sci-fi, family, animation, fantasy, mystery —
+  first match wins. (The old horror rule — "Hard pass, Tammy's rules
+  apply to me too" — was removed 2026-11-11 at John's request, so
+  horror titles now just get the rating or genre line like anything
+  else.) The paw rating (1–5) comes from the IMDb rating. If Cinemeta
+  has no match, the Worker falls back to TMDB
   (free key, stored as a Worker secret — never in code) and builds the
   meta from there.
 - If both sources fail, the Worker answers 404, so Stremio just uses

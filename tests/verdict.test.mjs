@@ -17,9 +17,14 @@ const check = (name, fn) => {
   console.log(`  ok ${n}. ${name}`);
 };
 
-check("horror beats everything", () => {
+check("horror gets no special treatment", () => {
   const v = verdict(base({ genres: [{ id: 27, name: "Horror" }, { id: 35, name: "Comedy" }] }));
-  assert.equal(v.line, "Horror. Hard pass — Tammy's rules apply to me too.");
+  assert.equal(v.line, "Actually funny. Rare, these days.");
+});
+
+check("horror with a high rating gets the rating line", () => {
+  const v = verdict(base({ genres: [{ id: 27, name: "Horror" }], vote_average: 9.0, vote_count: 20000 }));
+  assert.equal(v.line, "Genuinely good. Watch it before someone spoils it for you.");
 });
 
 check("rom-com", () => {

@@ -30,7 +30,6 @@ const GENRE = {
 };
 
 const RULES = [
-  { test: (g) => g.has(GENRE.HORROR), line: "Horror. Hard pass — Tammy's rules apply to me too." },
   { test: (g) => g.has(GENRE.ROMANCE) && g.has(GENRE.COMEDY), line: "A rom-com. Tammy's already seen it twice." },
   { test: (g) => g.has(GENRE.ROMANCE), line: "Tammy will love this one. You will survive it. Probably." },
   { test: (g, d) => d.vote_average >= 8 && d.vote_count >= 100, line: "Genuinely good. Watch it before someone spoils it for you." },

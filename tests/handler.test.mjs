@@ -118,11 +118,11 @@ const check = async (name, fn) => {
   console.log(`  ok ${n}. ${name}`);
 };
 
-await check("manifest serves v1.1.0", async () => {
+await check("manifest serves v1.1.1", async () => {
   const res = await call("/manifest.json");
   const m = await res.json();
   assert.equal(m.id, "community.hugos-take");
-  assert.equal(m.version, "1.1.0");
+  assert.equal(m.version, "1.1.1");
   assert.deepEqual(m.resources, ["meta"]);
 });
 
