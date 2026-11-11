@@ -17,17 +17,24 @@ Plus one link in the detail page's Links section: "More Hugo on YouTube".
 
 - The addon runs as a Cloudflare Worker (free tier). Stremio calls
   `/meta/movie/tt1234567.json` or `/meta/series/tt1234567.json`.
-- The Worker resolves the IMDb id through TMDB (free key, stored as a
-  Worker secret — never in code), fetches the title's details, and picks
-  Hugo's verdict from a rule bank (`src/verdict.js`): horror, rom-com,
-  romance, high/low ratings, action, comedy, drama, documentary, crime,
-  thriller, sci-fi, family, animation, fantasy, mystery — first match wins.
-- The paw rating (1–5) comes from TMDB's vote average, only when at least
-  20 people have voted.
-- The name, poster, runtime and genres come from the same TMDB data
-  Cinemeta uses, so the detail page looks the same — plus Hugo's line.
-- If TMDB has no match or the fetch fails, the Worker answers 404, so
-  Stremio just uses the other addons' meta. Nothing breaks.
+- **Stremio shows the meta from the addon at the top of your addon
+  list**, so a meta addon only gets seen when it sits above Cinemeta.
+  This Worker therefore does not compete with Cinemeta — it enriches
+  it. For each title it fetches Cinemeta's own meta (free public API,
+  no key) and returns the SAME object — same poster, cast, IMDb rating,
+  and for series the same episode list — with two additions: Hugo's
+  verdict prepended to the description, and a "More Hugo on YouTube"
+  link. **After installing, drag Hugo's Take to the top of your addon
+  list in Stremio** (Addons page) so its meta is the one Stremio shows.
+- The verdict comes from a rule bank (`src/verdict.js`): horror,
+  rom-com, romance, high/low ratings, action, comedy, drama,
+  documentary, crime, thriller, sci-fi, family, animation, fantasy,
+  mystery — first match wins. The paw rating (1–5) comes from the
+  IMDb rating. If Cinemeta has no match, the Worker falls back to TMDB
+  (free key, stored as a Worker secret — never in code) and builds the
+  meta from there.
+- If both sources fail, the Worker answers 404, so Stremio just uses
+  the other addons' meta. Nothing breaks either way.
 
 ## Deploy (repo owner)
 
