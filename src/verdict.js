@@ -2,6 +2,11 @@
 // Given TMDB details for a title, pick Hugo's deadpan one-liner and a
 // paw rating (1-5, derived from TMDB's vote average when enough people
 // have voted). First matching rule wins.
+//
+// verdictForCinemeta() does the same from a Cinemeta meta object
+// (genre names + imdbRating), so the Worker can enrich Cinemeta's meta
+// without a TMDB call. The imdbRating is a real IMDb rating (based on
+// many votes), so the vote-count gates are treated as passed.
 
 const GENRE = {
   ACTION: 28,
@@ -52,6 +57,41 @@ export function verdict(details) {
       ? Math.max(1, Math.min(5, Math.round((details.vote_average || 0) / 2)))
       : null;
   return { line: rule.line, paws };
+}
+
+const NAME_TO_ID = {
+  Action: 28,
+  Adventure: 12,
+  Animation: 16,
+  Comedy: 35,
+  Crime: 80,
+  Documentary: 99,
+  Drama: 18,
+  Family: 10751,
+  Fantasy: 14,
+  History: 36,
+  Horror: 27,
+  Music: 10402,
+  Mystery: 9648,
+  Romance: 10749,
+  "Science Fiction": 878,
+  "Sci-Fi": 878,
+  Thriller: 53,
+  War: 10752,
+  Western: 37,
+};
+
+export function verdictForCinemeta(meta) {
+  const rating = parseFloat(meta.imdbRating) || 0;
+  const details = {
+    genres: (meta.genres || [])
+      .map((name) => ({ id: NAME_TO_ID[name] }))
+      .filter((g) => g.id !== undefined),
+    vote_average: rating,
+    // an IMDb rating is by definition based on many votes
+    vote_count: rating > 0 ? 1000 : 0,
+  };
+  return verdict(details);
 }
 
 export function buildDescription(details) {
